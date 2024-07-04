@@ -30950,7 +30950,7 @@ try {
   // The YML workflow will need to set myToken with the GitHub Secret Token
   // myToken: ${{ secrets.GITHUB_TOKEN }}
   // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
-  const myToken = core.getInput('PAT');
+  const myToken = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('PAT');
   
   const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(myToken)
   
