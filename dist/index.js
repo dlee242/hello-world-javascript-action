@@ -30935,6 +30935,10 @@ try {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('who-to-greet');
   console.log(`Hello ${nameToGreet}!`);
+  
+  const testInput = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('test-input');
+  console.log(`Test Input: ${testInput}`);
+
   const time = (new Date()).toTimeString();
   (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput)("time", time);
   // Get the JSON webhook payload for the event that triggered the workflow
