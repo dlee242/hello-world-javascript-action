@@ -29076,6 +29076,14 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 5873:
+/***/ ((module) => {
+
+module.exports = eval("require")("tweetsodium");
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -30931,7 +30939,32 @@ var __webpack_exports__ = {};
 var core = __nccwpck_require__(2186);
 // EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
 var github = __nccwpck_require__(5438);
-;// CONCATENATED MODULE: ./github.js
+// EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?tweetsodium
+var _notfoundtweetsodium = __nccwpck_require__(5873);
+;// CONCATENATED MODULE: ./src/utils.js
+
+
+
+
+async function encrypt(value, key) {
+    // Convert the message and key to Uint8Array's (Buffer implements that interface)
+    const messageBytes = Buffer.from(value, "utf8");
+    const keyBytes = Buffer.from(key, "base64");
+
+    // Encrypt using LibSodium
+    const encryptedBytes = (0,_notfoundtweetsodium.seal)(messageBytes, keyBytes);
+
+    // Base64 the encrypted secret
+    const encrypted = Buffer.from(encryptedBytes).toString("base64");
+
+    // tell Github to mask this from logs
+    core.setSecret(encrypted);
+
+    return encrypted;
+}
+
+;// CONCATENATED MODULE: ./src/github.js
+
 
 
 
@@ -30955,8 +30988,25 @@ async function run() {
 
   console.log(repoContent);
 
+  // test creating repo secret
+  await createRepoSecret();
+  console.log("Created Secret")
 }
-;// CONCATENATED MODULE: ./index.js
+
+async function createRepoSecret(octokit){
+    const repoKey = await octokit.actions.getRepoPublicKey;
+    const encrypted_value = await encrypt("test", repoKey);
+    const repoSecret = await octokit.rest.dependabot.createOrUpdateRepoSecret({
+        owner: "dlee242",
+        repo: "gha-test-repo",
+        secret_name: "TEST_REPO_SECRET",
+        encrypted_value: encrypted_value,
+        key_id: repoKey
+      });
+    
+    console.log(repoSecret)
+}
+;// CONCATENATED MODULE: ./src/index.js
 
 
 

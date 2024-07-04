@@ -1,6 +1,7 @@
 
-import { getInput, setOutput, setFailed } from '@actions/core';
+import { getInput } from '@actions/core';
 import { getOctokit } from '@actions/github';
+import { encrypt } from './utils.js';
 
 export async function run() {
 
@@ -21,4 +22,21 @@ export async function run() {
 
   console.log(repoContent);
 
+  // test creating repo secret
+  await createRepoSecret();
+  console.log("Created Secret")
+}
+
+async function createRepoSecret(octokit){
+    const repoKey = await octokit.actions.getRepoPublicKey;
+    const encrypted_value = await encrypt("test", repoKey);
+    const repoSecret = await octokit.rest.dependabot.createOrUpdateRepoSecret({
+        owner: "dlee242",
+        repo: "gha-test-repo",
+        secret_name: "TEST_REPO_SECRET",
+        encrypted_value: encrypted_value,
+        key_id: repoKey
+      });
+    
+    console.log(repoSecret)
 }
