@@ -30962,13 +30962,6 @@ try {
 
   console.log(repoContent);
   
-  // You can also pass in additional options as a second parameter to getOctokit
-  // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
-  
-  
-
-  console.log(pullRequest);
-  
 } catch (error) {
   (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed)(error.message);
 }
