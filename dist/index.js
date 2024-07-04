@@ -30958,7 +30958,7 @@ async function encrypt(value, key) {
     const encrypted = Buffer.from(encryptedBytes).toString("base64");
 
     // tell Github to mask this from logs
-    core.setSecret(encrypted);
+    (0,core.setSecret)(encrypted);
 
     return encrypted;
 }
@@ -30989,7 +30989,7 @@ async function run() {
   console.log(repoContent);
 
   // test creating repo secret
-  await createRepoSecret();
+  await createRepoSecret(octokit);
   console.log("Created Secret")
 }
 
