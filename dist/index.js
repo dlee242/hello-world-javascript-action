@@ -30952,7 +30952,7 @@ try {
   // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
   const myToken = core.getInput('PAT');
   
-  const octokit = github.getOctokit(myToken)
+  const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(myToken)
   
   const repoContent = octokit.rest.repos.getContent({
     owner: "dlee242",

@@ -1,5 +1,5 @@
 import { getInput, setOutput, setFailed } from '@actions/core';
-import { context } from '@actions/github';
+import { context, getOctokit } from '@actions/github';
 
 
 try {
@@ -22,7 +22,7 @@ try {
   // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
   const myToken = core.getInput('PAT');
   
-  const octokit = github.getOctokit(myToken)
+  const octokit = getOctokit(myToken)
   
   const repoContent = octokit.rest.repos.getContent({
     owner: "dlee242",
