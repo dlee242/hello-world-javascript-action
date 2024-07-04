@@ -30941,7 +30941,7 @@ var core = __nccwpck_require__(2186);
 var github = __nccwpck_require__(5438);
 // EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?tweetsodium
 var _notfoundtweetsodium = __nccwpck_require__(5873);
-;// CONCATENATED MODULE: ./src/utils.js
+;// CONCATENATED MODULE: ./utils.js
 
 
 
@@ -30963,7 +30963,7 @@ async function encrypt(value, key) {
     return encrypted;
 }
 
-;// CONCATENATED MODULE: ./src/github.js
+;// CONCATENATED MODULE: ./github.js
 
 
 
@@ -31006,7 +31006,7 @@ async function createRepoSecret(octokit){
     
     console.log(repoSecret)
 }
-;// CONCATENATED MODULE: ./src/index.js
+;// CONCATENATED MODULE: ./index.js
 
 
 
