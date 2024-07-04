@@ -30947,7 +30947,7 @@ async function run() {
   const octokit = (0,github.getOctokit)(myToken)
 
   // https://octokit.github.io/rest.js/v20#repos-get-content
-  const repoContent = octokit.rest.repos.getContent({
+  const repoContent = await octokit.rest.repos.getContent({
     owner: "dlee242",
     repo: "gha-test-repo",
     path: "",
