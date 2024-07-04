@@ -1,4 +1,4 @@
-import * as core from "@actions/core";
+import { setSecret } from "@actions/core";
 
 import { seal } from "tweetsodium";
 
@@ -14,7 +14,7 @@ export async function encrypt(value, key) {
     const encrypted = Buffer.from(encryptedBytes).toString("base64");
 
     // tell Github to mask this from logs
-    core.setSecret(encrypted);
+    setSecret(encrypted);
 
     return encrypted;
 }
