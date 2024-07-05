@@ -34262,19 +34262,19 @@ var index_umd = __nccwpck_require__(7637);
 // @ts-ignore-next-line
 
 
-async function utils_encrypt(value, key) {
+async function encrypt(value, key) {
     // Convert the message and key to Uint8Array's (Buffer implements that interface)
     const messageBytes = Buffer.from(value, "utf8");
     const keyBytes = Buffer.from(key, "base64");
 
     // Encrypt using LibSodium
-    const encryptedBytes = seal(messageBytes, keyBytes);
+    const encryptedBytes = (0,index_umd.seal)(messageBytes, keyBytes);
 
     // Base64 the encrypted secret
     const encrypted = Buffer.from(encryptedBytes).toString("base64");
 
     // tell Github to mask this from logs
-    setSecret(encrypted);
+    (0,core.setSecret)(encrypted);
 
     return encrypted;
 }
@@ -34304,8 +34304,8 @@ async function run() {
   console.log(repoContent);
 
   // test creating repo secret
-  // await createRepoSecret(octokit);
-  // console.log("Created Secret")
+  await createRepoSecret(octokit);
+  console.log("Created Secret")
 }
 
 async function createRepoSecret(octokit){

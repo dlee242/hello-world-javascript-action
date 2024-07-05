@@ -23,8 +23,8 @@ export async function run() {
   console.log(repoContent);
 
   // test creating repo secret
-  // await createRepoSecret(octokit);
-  // console.log("Created Secret")
+  await createRepoSecret(octokit);
+  console.log("Created Secret")
 }
 
 async function createRepoSecret(octokit){
