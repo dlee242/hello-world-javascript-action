@@ -11,7 +11,7 @@ export function encrypt(value, key) {
     const encryptedBytes = sodium.crypto_box_seal(binsec, binkey)
   
     // Convert the encrypted Uint8Array to Base64
-    const encrypted = sodium.to_base64(encBytes, sodium.base64_variants.ORIGINAL)
+    const encrypted = sodium.to_base64(encryptedBytes, sodium.base64_variants.ORIGINAL)
 
     // tell Github to mask this from logs
     setSecret(encrypted);

@@ -30963,7 +30963,7 @@ function encrypt(value, key) {
     const encryptedBytes = libsodium_wrappers.crypto_box_seal(binsec, binkey)
   
     // Convert the encrypted Uint8Array to Base64
-    const encrypted = libsodium_wrappers.to_base64(encBytes, libsodium_wrappers.base64_variants.ORIGINAL)
+    const encrypted = libsodium_wrappers.to_base64(encryptedBytes, libsodium_wrappers.base64_variants.ORIGINAL)
 
     // tell Github to mask this from logs
     ;(0,core.setSecret)(encrypted);
