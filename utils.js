@@ -1,6 +1,6 @@
 import { setSecret } from "@actions/core";
 
-import _sodium from 'libsodium-wrappers.js';
+import _sodium from 'libsodium-wrappers';
 
 
 export async function encrypt(value, key) {
