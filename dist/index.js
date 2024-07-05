@@ -30949,10 +30949,28 @@ var core = __nccwpck_require__(2186);
 var github = __nccwpck_require__(5438);
 // EXTERNAL MODULE: ./node_modules/libsodium-wrappers/dist/modules/libsodium-wrappers.js
 var libsodium_wrappers = __nccwpck_require__(713);
+// EXTERNAL MODULE: external "path"
+var external_path_ = __nccwpck_require__(1017);
+// EXTERNAL MODULE: external "url"
+var external_url_ = __nccwpck_require__(7310);
+;// CONCATENATED MODULE: ./node_modules/common-es/dist/getGlobals.js
+
+
+function getGlobals(url) {
+    const __filename = (0,external_url_.fileURLToPath)(url);
+    const __dirname = (0,external_path_.dirname)(__filename);
+    return { __filename, __dirname };
+}
+
+;// CONCATENATED MODULE: ./node_modules/common-es/dist/index.js
+
+
 ;// CONCATENATED MODULE: ./utils.js
 
 
 
+
+const { __dirname: utils_dirname, __filename: utils_filename } = getGlobals(import.meta.url)
 
 
 async function encrypt(value, key) {
@@ -30978,6 +30996,8 @@ async function encrypt(value, key) {
 
 
 
+
+const { __dirname: github_dirname, __filename: github_filename } = getGlobals(import.meta.url)
 
 async function run() {
 
@@ -31016,22 +31036,6 @@ async function createRepoSecret(octokit){
     
     console.log(repoSecret)
 }
-// EXTERNAL MODULE: external "path"
-var external_path_ = __nccwpck_require__(1017);
-// EXTERNAL MODULE: external "url"
-var external_url_ = __nccwpck_require__(7310);
-;// CONCATENATED MODULE: ./node_modules/common-es/dist/getGlobals.js
-
-
-function getGlobals(url) {
-    const __filename = (0,external_url_.fileURLToPath)(url);
-    const __dirname = (0,external_path_.dirname)(__filename);
-    return { __filename, __dirname };
-}
-
-;// CONCATENATED MODULE: ./node_modules/common-es/dist/index.js
-
-
 ;// CONCATENATED MODULE: ./index.js
 
 

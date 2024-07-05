@@ -2,6 +2,8 @@
 import { getInput } from '@actions/core';
 import { getOctokit } from '@actions/github';
 import { encrypt } from './utils.js';
+import { getGlobals } from 'common-es'
+const { __dirname, __filename } = getGlobals(import.meta.url)
 
 export async function run() {
 
