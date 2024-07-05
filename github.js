@@ -1,7 +1,7 @@
 
 import { getInput } from '@actions/core';
 import { getOctokit } from '@actions/github';
-import { encrypt } from './utils.js';
+import { encrypt } from './utils';
 
 export async function run() {
 
