@@ -1,10 +1,10 @@
 import { setSecret } from "@actions/core";
 
 import _sodium from 'libsodium-wrappers';
+await _sodium.ready;
 
 
 export async function encrypt(value, key) {
-    await _sodium.ready;
     const sodium = _sodium;
     const binkey = sodium.from_base64(key, sodium.base64_variants.ORIGINAL);
     const binsec = sodium.from_string(value);
