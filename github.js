@@ -2,8 +2,6 @@
 import { getInput } from '@actions/core';
 import { getOctokit } from '@actions/github';
 import { encrypt } from './utils.js';
-import { getGlobals } from 'common-es'
-var { __dirname, __filename } = getGlobals(import.meta.url)
 
 export async function run() {
 
@@ -25,8 +23,8 @@ export async function run() {
   console.log(repoContent);
 
   // test creating repo secret
-  await createRepoSecret(octokit);
-  console.log("Created Secret")
+  // await createRepoSecret(octokit);
+  // console.log("Created Secret")
 }
 
 async function createRepoSecret(octokit){
