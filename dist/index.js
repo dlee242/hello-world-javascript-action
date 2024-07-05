@@ -30899,143 +30899,6 @@ function parseParams (str) {
 module.exports = parseParams
 
 
-/***/ }),
-
-/***/ 3079:
-/***/ ((__webpack_module__, __webpack_exports__, __nccwpck_require__) => {
-
-__nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
-/* harmony export */   "K": () => (/* binding */ run)
-/* harmony export */ });
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(2186);
-/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(5438);
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(9542);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_utils_js__WEBPACK_IMPORTED_MODULE_2__]);
-_utils_js__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
-
-
-
-
-async function run() {
-
-  // This should be a token with access to your repository scoped in as a secret.
-  // The YML workflow will need to set myToken with the GitHub Secret Token
-  // myToken: ${{ secrets.GITHUB_TOKEN }}
-  // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
-  const myToken = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('PAT');
-  
-  const octokit = (0,_actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit)(myToken)
-
-  // https://octokit.github.io/rest.js/v20#repos-get-content
-  const repoContent = await octokit.rest.repos.getContent({
-    owner: "dlee242",
-    repo: "gha-test-repo",
-    path: "",
-  });
-
-  console.log(repoContent);
-
-  // test creating repo secret
-  await createRepoSecret(octokit);
-  console.log("Created Secret")
-}
-
-async function createRepoSecret(octokit){
-    const repoKey = await octokit.actions.getRepoPublicKey;
-    const encrypted_value = await (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__/* .encrypt */ .H)("test", repoKey);
-    const repoSecret = await octokit.rest.dependabot.createOrUpdateRepoSecret({
-        owner: "dlee242",
-        repo: "gha-test-repo",
-        secret_name: "TEST_REPO_SECRET",
-        encrypted_value: encrypted_value,
-        key_id: repoKey
-      });
-    
-    console.log(repoSecret)
-}
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
-/***/ 1378:
-/***/ ((__webpack_module__, __unused_webpack___webpack_exports__, __nccwpck_require__) => {
-
-__nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(2186);
-/* harmony import */ var _github_js__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(3079);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(1017);
-/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(7310);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_github_js__WEBPACK_IMPORTED_MODULE_1__]);
-_github_js__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
-
-
-
-
-const __filename = (0,url__WEBPACK_IMPORTED_MODULE_3__.fileURLToPath)(import.meta.url); // get the resolved path to the file
-const __dirname = path__WEBPACK_IMPORTED_MODULE_2__.dirname(__filename); // get the name of the directory
-
-console.log(__dirname);
-
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  
-  const testInput = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('test-input');
-  console.log(`Test Input: ${testInput}`);
-
-  const time = (new Date()).toTimeString();
-  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput)("time", time);
-  (0,_github_js__WEBPACK_IMPORTED_MODULE_1__/* .run */ .K)();
-
-} catch (error) {
-  (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed)(error.message);
-}
-
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
-/***/ 9542:
-/***/ ((__webpack_module__, __webpack_exports__, __nccwpck_require__) => {
-
-__nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
-/* harmony export */   "H": () => (/* binding */ encrypt)
-/* harmony export */ });
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(2186);
-/* harmony import */ var libsodium_wrappers__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(713);
-
-
-
-await libsodium_wrappers__WEBPACK_IMPORTED_MODULE_1__.ready;
-
-
-async function encrypt(value, key) {
-    const sodium = libsodium_wrappers__WEBPACK_IMPORTED_MODULE_1__;
-    const binkey = sodium.from_base64(key, sodium.base64_variants.ORIGINAL);
-    const binsec = sodium.from_string(value);
-  
-    // Encrypt the secret using libsodium
-    const encryptedBytes = sodium.crypto_box_seal(binsec, binkey);
-  
-    // Convert the encrypted Uint8Array to Base64
-    const encrypted = sodium.to_base64(encryptedBytes, sodium.base64_variants.ORIGINAL);
-
-    // tell Github to mask this from logs
-    (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setSecret)(encrypted);
-
-    return encrypted;
-}
-
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } }, 1);
-
 /***/ })
 
 /******/ });
@@ -31071,103 +30934,127 @@ __webpack_async_result__();
 /******/ }
 /******/ 
 /************************************************************************/
-/******/ /* webpack/runtime/async module */
-/******/ (() => {
-/******/ 	var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
-/******/ 	var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
-/******/ 	var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
-/******/ 	var resolveQueue = (queue) => {
-/******/ 		if(queue && !queue.d) {
-/******/ 			queue.d = 1;
-/******/ 			queue.forEach((fn) => (fn.r--));
-/******/ 			queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
-/******/ 		}
-/******/ 	}
-/******/ 	var wrapDeps = (deps) => (deps.map((dep) => {
-/******/ 		if(dep !== null && typeof dep === "object") {
-/******/ 			if(dep[webpackQueues]) return dep;
-/******/ 			if(dep.then) {
-/******/ 				var queue = [];
-/******/ 				queue.d = 0;
-/******/ 				dep.then((r) => {
-/******/ 					obj[webpackExports] = r;
-/******/ 					resolveQueue(queue);
-/******/ 				}, (e) => {
-/******/ 					obj[webpackError] = e;
-/******/ 					resolveQueue(queue);
-/******/ 				});
-/******/ 				var obj = {};
-/******/ 				obj[webpackQueues] = (fn) => (fn(queue));
-/******/ 				return obj;
-/******/ 			}
-/******/ 		}
-/******/ 		var ret = {};
-/******/ 		ret[webpackQueues] = x => {};
-/******/ 		ret[webpackExports] = dep;
-/******/ 		return ret;
-/******/ 	}));
-/******/ 	__nccwpck_require__.a = (module, body, hasAwait) => {
-/******/ 		var queue;
-/******/ 		hasAwait && ((queue = []).d = 1);
-/******/ 		var depQueues = new Set();
-/******/ 		var exports = module.exports;
-/******/ 		var currentDeps;
-/******/ 		var outerResolve;
-/******/ 		var reject;
-/******/ 		var promise = new Promise((resolve, rej) => {
-/******/ 			reject = rej;
-/******/ 			outerResolve = resolve;
-/******/ 		});
-/******/ 		promise[webpackExports] = exports;
-/******/ 		promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
-/******/ 		module.exports = promise;
-/******/ 		body((deps) => {
-/******/ 			currentDeps = wrapDeps(deps);
-/******/ 			var fn;
-/******/ 			var getResult = () => (currentDeps.map((d) => {
-/******/ 				if(d[webpackError]) throw d[webpackError];
-/******/ 				return d[webpackExports];
-/******/ 			}))
-/******/ 			var promise = new Promise((resolve) => {
-/******/ 				fn = () => (resolve(getResult));
-/******/ 				fn.r = 0;
-/******/ 				var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
-/******/ 				currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
-/******/ 			});
-/******/ 			return fn.r ? promise : getResult();
-/******/ 		}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
-/******/ 		queue && (queue.d = 0);
-/******/ 	};
-/******/ })();
-/******/ 
-/******/ /* webpack/runtime/define property getters */
-/******/ (() => {
-/******/ 	// define getter functions for harmony exports
-/******/ 	__nccwpck_require__.d = (exports, definition) => {
-/******/ 		for(var key in definition) {
-/******/ 			if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 			}
-/******/ 		}
-/******/ 	};
-/******/ })();
-/******/ 
-/******/ /* webpack/runtime/hasOwnProperty shorthand */
-/******/ (() => {
-/******/ 	__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ })();
-/******/ 
 /******/ /* webpack/runtime/compat */
 /******/ 
 /******/ if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = new URL('.', import.meta.url).pathname.slice(import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0, -1) + "/";
 /******/ 
 /************************************************************************/
-/******/ 
-/******/ // startup
-/******/ // Load entry module and return exports
-/******/ // This entry module used 'module' so it can't be inlined
-/******/ var __webpack_exports__ = __nccwpck_require__(1378);
-/******/ __webpack_exports__ = await __webpack_exports__;
-/******/ 
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+
+// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(2186);
+// EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
+var github = __nccwpck_require__(5438);
+// EXTERNAL MODULE: ./node_modules/libsodium-wrappers/dist/modules/libsodium-wrappers.js
+var libsodium_wrappers = __nccwpck_require__(713);
+;// CONCATENATED MODULE: ./utils.js
+
+
+
+
+
+async function encrypt(value, key) {
+    await libsodium_wrappers.ready;
+    const sodium = libsodium_wrappers;
+    const binkey = sodium.from_base64(key, sodium.base64_variants.ORIGINAL);
+    const binsec = sodium.from_string(value);
+  
+    // Encrypt the secret using libsodium
+    const encryptedBytes = sodium.crypto_box_seal(binsec, binkey);
+  
+    // Convert the encrypted Uint8Array to Base64
+    const encrypted = sodium.to_base64(encryptedBytes, sodium.base64_variants.ORIGINAL);
+
+    // tell Github to mask this from logs
+    (0,core.setSecret)(encrypted);
+
+    return encrypted;
+}
+
+;// CONCATENATED MODULE: ./github.js
+
+
+
+
+
+async function run() {
+
+  // This should be a token with access to your repository scoped in as a secret.
+  // The YML workflow will need to set myToken with the GitHub Secret Token
+  // myToken: ${{ secrets.GITHUB_TOKEN }}
+  // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
+  const myToken = (0,core.getInput)('PAT');
+  
+  const octokit = (0,github.getOctokit)(myToken)
+
+  // https://octokit.github.io/rest.js/v20#repos-get-content
+  const repoContent = await octokit.rest.repos.getContent({
+    owner: "dlee242",
+    repo: "gha-test-repo",
+    path: "",
+  });
+
+  console.log(repoContent);
+
+  // test creating repo secret
+  await createRepoSecret(octokit);
+  console.log("Created Secret")
+}
+
+async function createRepoSecret(octokit){
+    const repoKey = await octokit.actions.getRepoPublicKey;
+    const encrypted_value = await encrypt("test", repoKey);
+    const repoSecret = await octokit.rest.dependabot.createOrUpdateRepoSecret({
+        owner: "dlee242",
+        repo: "gha-test-repo",
+        secret_name: "TEST_REPO_SECRET",
+        encrypted_value: encrypted_value,
+        key_id: repoKey
+      });
+    
+    console.log(repoSecret)
+}
+// EXTERNAL MODULE: external "path"
+var external_path_ = __nccwpck_require__(1017);
+// EXTERNAL MODULE: external "url"
+var external_url_ = __nccwpck_require__(7310);
+;// CONCATENATED MODULE: ./node_modules/common-es/dist/getGlobals.js
+
+
+function getGlobals(url) {
+    const __filename = (0,external_url_.fileURLToPath)(url);
+    const __dirname = (0,external_path_.dirname)(__filename);
+    return { __filename, __dirname };
+}
+
+;// CONCATENATED MODULE: ./node_modules/common-es/dist/index.js
+
+
+;// CONCATENATED MODULE: ./index.js
+
+
+
+const { __dirname: index_dirname, __filename: index_filename } = getGlobals(import.meta.url)
+
+try {
+  // `who-to-greet` input defined in action metadata file
+  const nameToGreet = (0,core.getInput)('who-to-greet');
+  console.log(`Hello ${nameToGreet}!`);
+  
+  const testInput = (0,core.getInput)('test-input');
+  console.log(`Test Input: ${testInput}`);
+
+  const time = (new Date()).toTimeString();
+  (0,core.setOutput)("time", time);
+  run();
+
+} catch (error) {
+  (0,core.setFailed)(error.message);
+}
+
+})();
+
 
 //# sourceMappingURL=index.js.map
