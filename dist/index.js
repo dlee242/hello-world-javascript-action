@@ -30949,21 +30949,11 @@ var core = __nccwpck_require__(2186);
 var github = __nccwpck_require__(5438);
 // EXTERNAL MODULE: ./node_modules/libsodium-wrappers/dist/modules/libsodium-wrappers.js
 var libsodium_wrappers = __nccwpck_require__(713);
-// EXTERNAL MODULE: external "path"
-var external_path_ = __nccwpck_require__(1017);
-// EXTERNAL MODULE: external "url"
-var external_url_ = __nccwpck_require__(7310);
 ;// CONCATENATED MODULE: ./utils.js
 
 
 
 
-
-
-const utils_filename = (0,external_url_.fileURLToPath)(import.meta.url); // get the resolved path to the file
-const utils_dirname = external_path_.dirname(utils_filename); // get the name of the directory
-
-console.log(utils_dirname);
 
 async function encrypt(value, key) {
     await libsodium_wrappers.ready;
@@ -31026,9 +31016,20 @@ async function createRepoSecret(octokit){
     
     console.log(repoSecret)
 }
+// EXTERNAL MODULE: external "path"
+var external_path_ = __nccwpck_require__(1017);
+// EXTERNAL MODULE: external "url"
+var external_url_ = __nccwpck_require__(7310);
 ;// CONCATENATED MODULE: ./index.js
 
 
+
+
+
+const index_filename = (0,external_url_.fileURLToPath)(import.meta.url); // get the resolved path to the file
+const index_dirname = external_path_.dirname(index_filename); // get the name of the directory
+
+console.log(index_dirname);
 
 try {
   // `who-to-greet` input defined in action metadata file
