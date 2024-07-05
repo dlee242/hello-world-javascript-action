@@ -1,5 +1,5 @@
 import { getInput, setOutput, setFailed } from '@actions/core';
-import { run } from '../github.js';
+import { run } from './github.js';
 
 try {
   // `who-to-greet` input defined in action metadata file
