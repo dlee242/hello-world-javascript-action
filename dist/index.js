@@ -34310,7 +34310,6 @@ async function run() {
 
 async function createRepoSecret(octokit){
     const repoKey = (await octokit.rest.actions.getRepoPublicKey({owner: "dlee242", repo: "gha-test-repo"})).data;
-    console.log(repoKey)
     const encrypted_value = await encrypt("test", repoKey.key);
     const repoSecret = await octokit.rest.actions.createOrUpdateRepoSecret({
         owner: "dlee242",
