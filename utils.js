@@ -2,7 +2,7 @@ import { setSecret } from "@actions/core";
 
 import _sodium from 'libsodium-wrappers';
 import { getGlobals } from 'common-es'
-const { __dirname, __filename } = getGlobals(import.meta.url)
+var { __dirname, __filename } = getGlobals(import.meta.url)
 
 
 export async function encrypt(value, key) {

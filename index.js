@@ -1,7 +1,7 @@
 import { getInput, setOutput, setFailed } from '@actions/core';
 import { run } from './github.js';
 import { getGlobals } from 'common-es'
-const { __dirname, __filename } = getGlobals(import.meta.url)
+var { __dirname, __filename } = getGlobals(import.meta.url)
 
 try {
   // `who-to-greet` input defined in action metadata file

@@ -30970,7 +30970,7 @@ function getGlobals(url) {
 
 
 
-const { __dirname: utils_dirname, __filename: utils_filename } = getGlobals(import.meta.url)
+var { __dirname: utils_dirname, __filename: utils_filename } = getGlobals(import.meta.url)
 
 
 async function encrypt(value, key) {
@@ -30997,7 +30997,7 @@ async function encrypt(value, key) {
 
 
 
-const { __dirname: github_dirname, __filename: github_filename } = getGlobals(import.meta.url)
+var { __dirname: github_dirname, __filename: github_filename } = getGlobals(import.meta.url)
 
 async function run() {
 
@@ -31040,7 +31040,7 @@ async function createRepoSecret(octokit){
 
 
 
-const { __dirname: index_dirname, __filename: index_filename } = getGlobals(import.meta.url)
+var { __dirname: index_dirname, __filename: index_filename } = getGlobals(import.meta.url)
 
 try {
   // `who-to-greet` input defined in action metadata file
