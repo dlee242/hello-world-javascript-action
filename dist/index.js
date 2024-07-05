@@ -30955,7 +30955,7 @@ var libsodium_wrappers = __nccwpck_require__(713);
 
 
 
-async function encrypt(value, key) {
+function encrypt(value, key) {
     const binkey = libsodium_wrappers.from_base64(key, libsodium_wrappers.base64_variants.ORIGINAL)
     const binsec = libsodium_wrappers.from_string(value)
   
@@ -31003,7 +31003,7 @@ async function run() {
 
 async function createRepoSecret(octokit){
     const repoKey = await octokit.actions.getRepoPublicKey;
-    const encrypted_value = await encrypt("test", repoKey);
+    const encrypted_value = encrypt("test", repoKey);
     const repoSecret = await octokit.rest.dependabot.createOrUpdateRepoSecret({
         owner: "dlee242",
         repo: "gha-test-repo",
